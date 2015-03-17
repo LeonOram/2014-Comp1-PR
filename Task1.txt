@@ -1,0 +1,20 @@
+3a- 1. Function - GetPlayerName
+	2. If input == "" repeat
+	3. continue - Boolean
+Pseudo-code
+	
+Function GetPlayerName
+	OUTPUT ""
+	Continue <- True
+	WHILE Continue == True
+		OUTPUT "Please enter your name"
+		PlayerName <- USERINPUT
+		IF PlayerName != ""
+			Continue <- False
+		ENDIF
+	ENDWHILE
+	OUTPUT ""
+	RETURN PlayerName
+ENDFUNCION
+
+3b - 1. UpdateRecentScores
