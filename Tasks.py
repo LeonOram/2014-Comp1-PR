@@ -5,6 +5,7 @@
 # version 2 edited 06/03/2014
 
 import random
+from datetime import *
 
 NO_OF_RECENT_SCORES = 3
 
@@ -17,6 +18,7 @@ class TRecentScore():
   def __init__(self):
     self.Name = ''
     self.Score = 0
+    self.Date = None
 
 Deck = [None]
 RecentScores = [None]
@@ -163,19 +165,22 @@ def ResetRecentScores(RecentScores):
   for Count in range(1, NO_OF_RECENT_SCORES + 1):
     RecentScores[Count].Name = ''
     RecentScores[Count].Score = 0
+    RecentScores[Count].Date = ""
 
 def DisplayRecentScores(RecentScores):
   print()
   print('Recent Scores: ')
   print()
+  print("{0:<8} {1:<5} {2:<9}".format("Name","Score","Date"))
   for Count in range(1, NO_OF_RECENT_SCORES + 1):
-    print(RecentScores[Count].Name, 'got a score of', RecentScores[Count].Score)
+    #print(RecentScores[Count].Name, 'got a score of', RecentScores[Count].Score)
+    print("{:<8} {:<5} {!s:<9}".format(RecentScores[Count].Name,RecentScores[Count].Score,RecentScores[Count].Date))
   print()
   print('Press the Enter key to return to the main menu')
   input()
   print()
 
-def UpdateRecentScores(RecentScores, Score):
+def UpdateRecentScores(RecentScores, Score, currentDate):
   SaveScore = input("You you like to save your score? y/n ")
   SaveScore = SaveScore[:1].lower()
   if SaveScore == "y":
@@ -194,8 +199,9 @@ def UpdateRecentScores(RecentScores, Score):
       Count = NO_OF_RECENT_SCORES
     RecentScores[Count].Name = PlayerName
     RecentScores[Count].Score = Score
+    RecentScores[Count].Date = currentDate
 
-def PlayGame(Deck, RecentScores):
+def PlayGame(Deck, RecentScores,currentDate):
   LastCard = TCard()
   NextCard = TCard()
   GameOver = False
@@ -218,12 +224,14 @@ def PlayGame(Deck, RecentScores):
       GameOver = True
   if GameOver:
     DisplayEndOfGameMessage(NoOfCardsTurnedOver - 2)
-    UpdateRecentScores(RecentScores, NoOfCardsTurnedOver - 2)
+    UpdateRecentScores(RecentScores, NoOfCardsTurnedOver - 2,currentDate)
   else:
     DisplayEndOfGameMessage(51)
-    UpdateRecentScores(RecentScores, 51)
+    UpdateRecentScores(RecentScores, 51,currentDate)
 
 if __name__ == '__main__':
+  currentDate = datetime.now()
+  currentDate = datetime.strftime(currentDate,"%d/%m/%Y")
   for Count in range(1, 53):
     Deck.append(TCard())
   for Count in range(1, NO_OF_RECENT_SCORES + 1):
@@ -235,10 +243,10 @@ if __name__ == '__main__':
     if Choice == '1':
       LoadDeck(Deck)
       ShuffleDeck(Deck)
-      PlayGame(Deck, RecentScores)
+      PlayGame(Deck, RecentScores,currentDate)
     elif Choice == '2':
       LoadDeck(Deck)
-      PlayGame(Deck, RecentScores)
+      PlayGame(Deck, RecentScores,currentDate)
     elif Choice == '3':
       DisplayRecentScores(RecentScores)
     elif Choice == '4':

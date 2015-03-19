@@ -18,4 +18,7 @@ Function GetPlayerName
 ENDFUNCION
 
 3b - 1. UpdateRecentScores
-Test
+
+5 - 1. Datetime
+	2. ResetRecentScores, DisplayRecentScores, UpdateRecentScores, Class TRecentScore
+	3. strptime("String","%d %m %Y")
