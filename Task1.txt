@@ -33,3 +33,6 @@ Additional Task
 	   Transformation - stores the output of a calculation - Position1 
 	   Follower - set to the value of another variable before it is changed - 
 	   Temporary - only holds a value for a short time - contin
+
+	2. Calling by reference - Working with the original value inside a function - e.g. lists and records
+	   Calling by Value - working with a copy of the variable inside a function. Return the new variable - Variables in python, def..(x) / return x
