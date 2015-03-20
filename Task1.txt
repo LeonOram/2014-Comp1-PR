@@ -27,8 +27,8 @@ Additional Task
 
 	1. Fixed Value - A variable that is not changed once assigned - NO_OF_RECENT_SCORES
 	   Stepper - A variable that iterates in a systematic way - Count
-	   Most recent holder - Stores the latest value from a calcution or imput - Choice
-	   Most wanted holder - Stores the most appropriate value recived, eg max value - 
+	   Most recent holder - Stores the latest value from a calculation or input - Choice
+	   Most wanted holder - Stores the most appropriate value received, eg max value - 
 	   Gatherer - accumulates values - Score
 	   Transformation - stores the output of a calculation - Position1 
 	   Follower - set to the value of another variable before it is changed - 
