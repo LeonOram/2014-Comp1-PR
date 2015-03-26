@@ -26,7 +26,7 @@ Choice = ''
 
 def GetRank(RankNo):
   Rank = ''
-  if RankNo == 1:
+  if RankNo == 1 or RankNo == 14:
     Rank = 'Ace'
   elif RankNo == 2:
     Rank = 'Two'
@@ -74,6 +74,7 @@ def DisplayMenu():
   print('2. Play game (without shuffle)')
   print('3. Display recent scores')
   print('4. Reset recent scores')
+  print("5. Options Menu")
   print()
   print('Select an option from the menu (or enter q to quit): ', end='')
 
@@ -117,11 +118,16 @@ def DisplayCard(ThisCard):
   print('Card is the', GetRank(ThisCard.Rank), 'of', GetSuit(ThisCard.Suit))
   print()
 
-def GetCard(ThisCard, Deck, NoOfCardsTurnedOver):
+def GetCard(ThisCard, Deck, NoOfCardsTurnedOver,Ace):
   ThisCard.Rank = Deck[1].Rank
+  print(ThisCard.Rank)
+  if Ace == "High" and ThisCard.Rank == 1:
+    ThisCard.Rank = ThisCard.Rank + 13
   ThisCard.Suit = Deck[1].Suit
   for Count in range(1, 52 - NoOfCardsTurnedOver):
     Deck[Count].Rank = Deck[Count + 1].Rank
+    if Ace == "High" and Deck[Count].Rank == 1:
+      Deck[Count].Rank = Deck[Count + 1].Rank + 13
     Deck[Count].Suit = Deck[Count + 1].Suit
   Deck[52 - NoOfCardsTurnedOver].Suit = 0
   Deck[52 - NoOfCardsTurnedOver].Rank = 0
@@ -201,15 +207,15 @@ def UpdateRecentScores(RecentScores, Score, currentDate):
     RecentScores[Count].Score = Score
     RecentScores[Count].Date = currentDate
 
-def PlayGame(Deck, RecentScores,currentDate):
+def PlayGame(Deck, RecentScores,currentDate,Ace):
   LastCard = TCard()
   NextCard = TCard()
   GameOver = False
-  GetCard(LastCard, Deck, 0)
+  GetCard(LastCard, Deck, 0,Ace)
   DisplayCard(LastCard)
   NoOfCardsTurnedOver = 1
   while (NoOfCardsTurnedOver < 52) and (not GameOver):
-    GetCard(NextCard, Deck, NoOfCardsTurnedOver)
+    GetCard(NextCard, Deck, NoOfCardsTurnedOver,Ace)
     Choice = ''
     while (Choice != 'y') and (Choice != 'n'):
       Choice = GetChoiceFromUser()
@@ -228,8 +234,35 @@ def PlayGame(Deck, RecentScores,currentDate):
   else:
     DisplayEndOfGameMessage(51)
     UpdateRecentScores(RecentScores, 51,currentDate)
+##
+def DisplayOptions():
+  print("1. Set Ace High or Low")
 
+def GetOptionChoice():
+  Choice = input("Select option : ")
+  return Choice
+  
+def SetOption(OptionChoice):
+  if OptionChoice == "1":
+    Ace = SetAceHighOrLow()
+    return Ace
+    
+    
+def SetAceHighOrLow():
+  conti = True
+  while conti:
+    Choice = input("Please select Ace high or low (high/low)")
+    Choice = Choice.lower()
+    if Choice == "high":
+      Ace = "High"
+      conti = False
+    elif Choice == "low":
+      Ace = "Low"
+      conti = False
+  return Ace
+  
 if __name__ == '__main__':
+  Ace = "Low"
   currentDate = datetime.now()
   currentDate = datetime.strftime(currentDate,"%d/%m/%Y")
   for Count in range(1, 53):
@@ -243,11 +276,15 @@ if __name__ == '__main__':
     if Choice == '1':
       LoadDeck(Deck)
       ShuffleDeck(Deck)
-      PlayGame(Deck, RecentScores,currentDate)
+      PlayGame(Deck, RecentScores,currentDate,Ace)
     elif Choice == '2':
       LoadDeck(Deck)
-      PlayGame(Deck, RecentScores,currentDate)
+      PlayGame(Deck, RecentScores,currentDate,Ace)
     elif Choice == '3':
       DisplayRecentScores(RecentScores)
     elif Choice == '4':
       ResetRecentScores(RecentScores)
+    elif Choice == "5":
+      DisplayOptions()
+      Choice = GetOptionChoice()
+      Ace = SetOption(Choice)

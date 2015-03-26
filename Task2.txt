@@ -1,0 +1,26 @@
+Q - 1. PlayGame
+	2. DisplayMenu
+	3. GetCard
+
+Function DisplayOptions
+	OUTPUT "1. Set Ace high low"
+
+Function GetOptionChoice
+	OUTPUT "Select Your Option"
+	OptionChoice <- USERINPUT
+	SetOption(OptionChoice)
+
+Function SetOption(OptionChoice)
+	IF OptionChoice == 1 THEN
+		SetAceHighOrLow()
+	ENDIF
+
+Function SetAceHighOrLow
+	OUTPUT "Please select Ace High or Ace Low"
+	Choice <- USERINPUT
+	IF Choice == High THEN
+		Ace = High
+	ELSEIF Choice == Low Then
+		Ace = Low
+	Return Ace
+
